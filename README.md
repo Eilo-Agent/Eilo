@@ -29,3 +29,22 @@ This repository contains instructions and templates, not a hosted agent, model w
 - `templates/`: reusable templates.
 
 See `CONTRIBUTING.md` and `SECURITY.md` before contributing.
+
+## Reference implementation
+
+This repository also includes a minimal Python reference implementation under `src/eilo/`. It provides an OpenAI-compatible chat-completions adapter, a bounded tool-calling loop, risk-aware approvals, local SQLite memory, a tool registry, and safe calculator and UTC-time tools.
+
+### Development setup
+
+The implementation requires Python 3.11 or newer:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e '.[dev]'
+cp .env.example .env
+pytest
+ruff check --select E4,E7,E9,F .
+```
+
+Configure `EILO_API_BASE_URL`, `EILO_API_KEY`, and `EILO_MODEL` through the local `.env` file. Never commit real credentials. The implementation intentionally does not provide arbitrary shell execution, browser/computer control, MCP transport, hosted scheduling, wallet access, or financial transaction capabilities by default; those remain documented extension points requiring separate review and authorization.
